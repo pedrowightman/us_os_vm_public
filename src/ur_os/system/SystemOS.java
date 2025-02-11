@@ -377,6 +377,7 @@ public class SystemOS implements Runnable{
         System.out.println("Average Turnaround Time: "+this.calcTurnaroundTime());
         System.out.println("Average Waiting Time: "+this.calcAvgWaitingTime());
         System.out.println("Average Context Switches: "+this.calcAvgContextSwitches());
+        System.out.println("Average Response Time: "+this.calcAvgResponseTime());
         
         showProcesses();
         memory.showNotNullBytes();
@@ -454,6 +455,18 @@ public class SystemOS implements Runnable{
         }
         
         return cont / (double)processes.size();
+    }
+
+    public double calcAvgResponseTime(){
+        
+        double tot = 0;
+        int temp = 0;
+        for (Process p : processes) {
+            temp = execution.indexOf(p.getPid());//On which cycle did the process started execution
+            tot = tot + (temp - p.getTime_init());//Difference between execution start and arrival
+        }
+        
+        return tot/processes.size();
     }
     
     
