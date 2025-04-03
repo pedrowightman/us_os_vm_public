@@ -55,11 +55,12 @@ public class OS {
     
     public static final int MAX_PROCESS_PRIORITY = 10; //Page size in bytes
     public static final int PAGE_SIZE = 64; //Page size in bytes
-    public static final MemoryManagerType SMM = MemoryManagerType.PAGING;
+    public static final MemoryManagerType SMM = MemoryManagerType.CONTIGUOUS;
     public static final FreeMemorySlotManagerType MSM = FreeMemorySlotManagerType.FIRST_FIT;
+    
     public static final ProcessVirtualMemoryManagerType PVMM = ProcessVirtualMemoryManagerType.FIFO;
     public static final int FRAMES_PER_PROCESS = 3; //Maximum number of frames assigned to a process, if virtual memory is on
-    public static final boolean VIRTUAL_MEMORY_MODE_ON = true; //Maximum number of frames assigned to a process, if virtual memory is on
+    public static final boolean VIRTUAL_MEMORY_MODE_ON = false; //Maximum number of frames assigned to a process, if virtual memory is on
     
     
     public OS(SystemOS system, CPU cpu, IOQueue ioq){
@@ -67,7 +68,7 @@ public class OS {
         this.ioq = ioq;
         this.system = system;
         this.cpu = cpu;
-        lazySwap = true;//No preloading pages to reduce page faults
+        lazySwap = false;//No preloading pages to reduce page faults
         
          if(SMM == MemoryManagerType.PAGING){
             smm = new SMM_Paging(this);
@@ -294,17 +295,24 @@ public class OS {
                 break;
             default:
             case CONTIGUOUS:
-                if(p.getSize() == 0)
-                    pmm = new PMM_Contiguous(p, getVMemorySlot(r.nextInt(MAX_PROC_SIZE-1)+1),this.lazySwap);
-                else
-                    pmm = new PMM_Contiguous(p, getVMemorySlot(p.getSize()),this.lazySwap);
-                
+                if(VIRTUAL_MEMORY_MODE_ON){
+                    if(p.getSize() == 0)
+                        pmm = new PMM_Contiguous(p, getVMemorySlot(r.nextInt(MAX_PROC_SIZE-1)+1),this.lazySwap);
+                    else
+                        pmm = new PMM_Contiguous(p, getVMemorySlot(p.getSize()),this.lazySwap);
+                }else{
+                    if(p.getSize() == 0){
+                        int tsize = r.nextInt(MAX_PROC_SIZE-1)+1;
+                        pmm = new PMM_Contiguous(p, getVMemorySlot(tsize),getMemorySlot(tsize),this.lazySwap);
+                    }else
+                        pmm = new PMM_Contiguous(p, getVMemorySlot(p.getSize()),getMemorySlot(p.getSize()),this.lazySwap);
+                }
                 p.setPMM(pmm); //Assign the newly created PMM
                 
-                if(!lazySwap){
+                /*if(!lazySwap){
                     PMM_Contiguous pmmc = (PMM_Contiguous)pmm;
                     pmmc.setMemorySlot(getMemorySlot(p.getSize())); //get free slot and assign it to the process and store the process in memory. 
-                }
+                }*/
                 break;
         }
         
