@@ -24,7 +24,7 @@ public class PMM_Contiguous extends ProcessMemoryManager{
         this( null, new MemorySlot(), null,false);
     }
     
-    public PMM_Contiguous(Process p, MemorySlot vm, boolean lazySwap) {
+    public PMM_Contiguous(Process p, MemorySlot vm, boolean lazySwap){
         this(p, vm, null,lazySwap);
     }
     
@@ -34,6 +34,9 @@ public class PMM_Contiguous extends ProcessMemoryManager{
             memorySlot = new MemorySlot(m);
         }else{
             memorySlot = null;
+        }
+        if(m != null){
+            valid = true;
         }
         vMemorySlot = new MemorySlot(vm); //Swap memory allocation
         dirty = false;
