@@ -82,36 +82,26 @@ public class SegmentTable {
         return segmentTable;
     }
     
-    public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd){
+    public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd, boolean store){
         int segment = -1;
         int offset = -1;
         
-        int temp = 0;
-        int temp_limit = 0;
-        //Verify if the logical address is valid for the program
-        if(locAdd < this.programSize && locAdd >= 0){
-            //Find the segment that contains the logical address
-            while(locAdd > temp_limit && temp < segmentTable.size()){
-                temp_limit += this.segmentTable.get(temp).getLimit();
-                temp++;
-            }
-            if(temp > 0){
-                temp--;
-                temp_limit -= this.segmentTable.get(temp).getLimit();
-            }
-            segment = temp;
-            offset = locAdd - temp_limit;
-        }else{
-            System.out.println("Error - Illegal Memory Address Request");
+        //Include your code here
+        
+        //For Virtual Memory
+        if(store){
+            this.segmentTable.get(segment).setDirty();
         }
+              
         System.out.println("Accessing Segment "+segment+" and offset "+offset);
         return new MemoryAddress(segment, offset);
     }
     
     public MemoryAddress getPhysicalMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){
-        int base = segmentTable.get(m.getDivision()).getBase();
         
-        return new MemoryAddress(base, m.getOffset());
+        //Include your code here
+        
+        return new MemoryAddress(-1, -1);
     }
     
     public SegmentTableEntry getSegment(int i){

@@ -101,29 +101,24 @@ public class PMM_Paging extends ProcessMemoryManager{
     }
     
     public MemoryAddress getPageMemoryAddressFromLocalAddress(int locAdd){
-        int page = locAdd/OS.PAGE_SIZE;
-        int offset = locAdd%OS.PAGE_SIZE;
-        System.out.println("Accessing Page "+page+" and offset "+offset);
-        this.addMemoryAccess(page); //Add the access to this page in the sequence of memory access
-        return new MemoryAddress(page, offset);
+        
+        //Include your code here
+        
+        return new MemoryAddress(-1, -1);
     }
     
     public int getFrameMemoryAddressFromLogicalMemoryAddress(int page){
-        return getFrameMemoryAddressFromLogicalMemoryAddress(new MemoryAddress(page, 0)).getDivision();
+        
+        //Include your code here
+        
+        return -1;
     }
     
     public MemoryAddress getFrameMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){
-        int frame = pt.getFrameIdFromPage(m.getDivision());
         
-        if(frame == -1){
-            System.out.println("Page fault!");
-            return null;
-        }else if(frame == -2){
-            System.out.println("ERROR in memory access - Invalid page");
-            return null;
-        } 
+        //Include your code here
         
-        return new MemoryAddress(frame, m.getOffset());
+        return new MemoryAddress(-1, -1);
     }
     
     
@@ -132,15 +127,10 @@ public class PMM_Paging extends ProcessMemoryManager{
     }
     
     public MemoryAddress getVFrameMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){
-        int frame = vpt.getFrameIdFromPage(m.getDivision());
         
-        //No possibility of page fault because all pages are loaded into the swap area
-        if(frame == -2){
-            System.out.println("ERROR in memory access - Invalid page");
-            return null;
-        } 
+        //Include your code here
         
-        return new MemoryAddress(frame, m.getOffset());
+        return new MemoryAddress(-1, -1);
     }
     
    

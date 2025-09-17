@@ -51,7 +51,12 @@ public class PMM_Segmentation extends ProcessMemoryManager{
     
     public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd){
         
-        return st.getSegmentMemoryAddressFromLocalAddress(locAdd);
+        return getSegmentMemoryAddressFromLocalAddress(locAdd, false);
+    }
+    
+    public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd, boolean store){
+        
+        return st.getSegmentMemoryAddressFromLocalAddress(locAdd, store);
     }
     
     public MemoryAddress getPhysicalMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){

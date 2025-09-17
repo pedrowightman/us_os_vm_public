@@ -60,6 +60,10 @@ public class SegmentTableEntry {
         return dirty;
     }
     
+    public void setDirty(){
+        dirty = true;
+    }
+    
     @Override
     public String toString(){
         return "Base: "+m.getBase()+" Limit: "+m.getSize()+" Dirty: "+dirty;
