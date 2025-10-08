@@ -104,6 +104,7 @@ public class PMM_Paging extends ProcessMemoryManager{
         
         //Include your code here
         
+        
         return new MemoryAddress(-1, -1);
     }
     
@@ -117,6 +118,8 @@ public class PMM_Paging extends ProcessMemoryManager{
     public MemoryAddress getFrameMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){
         
         //Include your code here
+        //Return null if the address is not loaded in a frame (just for virtual memory)
+        //Include a memory access to the page that is being accessed and that is loaded
         
         return new MemoryAddress(-1, -1);
     }
@@ -166,7 +169,7 @@ public class PMM_Paging extends ProcessMemoryManager{
     @Override
     public int getVictim(){
         if(this.loadedPages == this.assignedPages)
-            return pvmm.getVictim(memoryAccesses,this.loadedPages);
+            return pvmm.getVictim(memoryAccesses,this.pt.getValidList());
         else
             return -1;
     }

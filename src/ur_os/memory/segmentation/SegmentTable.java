@@ -122,6 +122,18 @@ public class SegmentTable {
         }
         
     }
+    
+    public ArrayList<Integer> getValidList(){
+        ArrayList<Integer> validSegments= new ArrayList();
+        int i=0;
+        for(SegmentTableEntry p: segmentTable){
+            if(p.isValid()){
+                validSegments.add(i);
+            }
+            i++;
+        }
+        return validSegments;
+    }
 
     public int getSize() {
         return segmentNumber;

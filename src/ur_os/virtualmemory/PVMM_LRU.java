@@ -4,6 +4,7 @@
  */
 package ur_os.virtualmemory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -17,12 +18,13 @@ public class PVMM_LRU extends ProcessVirtualMemoryManager{
     }
     
     @Override
-    public int getVictim(LinkedList<Integer> memoryAccesses, int loaded) {
+    public int getVictim(LinkedList<Integer> memoryAccesses, ArrayList<Integer> validList) {
         LinkedList<Integer> pages = new LinkedList();
         int size = memoryAccesses.size()-1;
+        int loaded = validList.size();
         
         while(size >= 0 && pages.size()<loaded){
-            if(!pages.contains(memoryAccesses.get(size))){
+            if(!pages.contains(memoryAccesses.get(size)) && validList.contains(memoryAccesses.get(size))){
                 pages.add(memoryAccesses.get(size));
             }
             size--;

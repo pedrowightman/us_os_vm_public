@@ -14,10 +14,12 @@ import ur_os.memory.freememorymagament.MemorySlot;
 public class SegmentTableEntry {
     boolean dirty;
     MemorySlot m;
+    boolean valid;
 
     public SegmentTableEntry(int base, int limit) {
         m = new MemorySlot(base, limit);
         dirty = false;
+        valid = false;
     }
     
     public SegmentTableEntry(MemorySlot m) {
@@ -38,6 +40,14 @@ public class SegmentTableEntry {
     
     public void markDirty(){
         dirty = true;
+    }
+    
+    public boolean isValid(){
+        return valid;
+    }
+    
+    public void setValid(boolean v){
+        valid = v;
     }
 
     public int getBase() {

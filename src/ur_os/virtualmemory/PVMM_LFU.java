@@ -4,6 +4,7 @@
  */
 package ur_os.virtualmemory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -17,7 +18,7 @@ public class PVMM_LFU extends ProcessVirtualMemoryManager{
     }
     
     @Override
-    public int getVictim(LinkedList<Integer> memoryAccesses, int loaded) {
+    public int getVictim(LinkedList<Integer> memoryAccesses, ArrayList<Integer> validList) {
         
         //ToDo
         
