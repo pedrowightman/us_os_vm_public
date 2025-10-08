@@ -18,10 +18,17 @@ public class PVMM_LRU extends ProcessVirtualMemoryManager{
     
     @Override
     public int getVictim(LinkedList<Integer> memoryAccesses, int loaded) {
+        LinkedList<Integer> pages = new LinkedList();
+        int size = memoryAccesses.size()-1;
         
-        //ToDo
+        while(size >= 0 && pages.size()<loaded){
+            if(!pages.contains(memoryAccesses.get(size))){
+                pages.add(memoryAccesses.get(size));
+            }
+            size--;
+        }
         
-        return -1;
+        return pages.getLast();
     }
     
 }
