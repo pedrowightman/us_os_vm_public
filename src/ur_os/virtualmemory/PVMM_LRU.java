@@ -22,9 +22,10 @@ public class PVMM_LRU extends ProcessVirtualMemoryManager{
         LinkedList<Integer> pages = new LinkedList();
         int size = memoryAccesses.size()-1;
         int loaded = validList.size();
-        
+        int temp;
         while(size >= 0 && pages.size()<loaded){
-            if(!pages.contains(memoryAccesses.get(size)) && validList.contains(memoryAccesses.get(size))){
+            temp = memoryAccesses.get(size);
+            if(!pages.contains(temp) && validList.contains(temp)){
                 pages.add(memoryAccesses.get(size));
             }
             size--;
